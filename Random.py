@@ -40,6 +40,8 @@ with open('random_list.txt') as file:
     spisok = [row.strip() for row in file]  #открываем список всех серий и записываем его в spisok
 with open('watched_list.txt') as file:
     watched_spisok = [row.strip() for row in file]  #записываем список просмотренных серий в watched_list
+    
+watched_spisok.sort()
 
 while True:
     print('Enter command "run" for new episode')
