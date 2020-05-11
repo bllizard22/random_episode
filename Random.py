@@ -20,6 +20,7 @@ def Add_episode(episode):
     watched_spisok.append(episode)
     watched_list.close()
 
+# сбрасываем список просмотренных серий 
 def Reset_list():
     print('Непросмотренных серий не осталось')
     print('Введите reset для сброса всего списка серий')
@@ -37,6 +38,7 @@ def Reset_list():
             f = open('watched_list.txt', 'w')
             f.close()
 
+# помечаем серию непросмотренной
 def Return_episode(episode):
     if episode in watched_spisok:
         spisok.append(episode)
@@ -52,7 +54,15 @@ with open('random_list.txt') as file:
     spisok = [row.strip() for row in file]  #открываем список всех серий и записываем его в spisok
 with open('watched_list.txt') as file:
     watched_spisok = [row.strip() for row in file]  #записываем список просмотренных серий в watched_list
-    
+  
+cleaned_spisok = []      
+for line in spisok:
+	if line in watched_spisok:
+		#cleaned_spisok.append(line)
+		Remove_episode(line)
+#spisok.clear()
+#spisok = cleaned_spisok
+print ('episodes left ', len(spisok))
 watched_spisok.sort()
 
 while True:
