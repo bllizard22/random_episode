@@ -1,0 +1,89 @@
+#:import Window kivy.core.window.Window
+#:import ToggleButton kivy.uix.togglebutton.ToggleButton
+#:set font Window.size[1]/10
+#:set color_0 [33/255, 121/255, 108/255, 1]
+#:set color_1 [157/255, 180/255, 245/255, 0.1]
+#:set color_2 [216/255, 215/255, 225/255, 1]
+#:set color_3 [145/255, 135/255, 165/255, 1]
+#:set color_4 [118/255, 125/255, 140/255, 1]
+
+<TapButt@Button>:
+	font_size: font/2.5
+	halign: 'center'
+	background_color: color_1
+	color: color_3
+
+<TogButt@ToggleButton>:
+	group: 'list'
+	font_size: font/2.5
+	halign: 'center'
+	background_color: color_1
+	color: color_3
+
+<AppGrid>:
+	# main
+	BoxLayout:
+		# height: Window.size[1]
+		# width: Window.size[0]
+		orientation: 'vertical'
+
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'top'
+			size_hint_y: 0.3
+			padding: 0, font/2, 0, 0
+
+			Button:
+				bold: True
+				text: 'X'
+				font_size: font/2
+				background_color: color_2
+				background_normal: ''
+				color: color_4
+				size_hint: 0.2, 0.2
+				on_press: root.btn_stop_press()
+
+		BoxLayout:
+			orientation: 'vertical'
+			padding: font*0.8, 0, font*0.8, font*0.8
+			spacing: font/4
+
+			Label:
+				id: ep_label
+				text: ''
+				font_size: font*2
+				color: color_4
+				bold: True
+				halign: 'center'
+
+			TextInput:
+				id: ep_input
+				multiline: False
+				input_filter: 'int'
+				halign: 'center'
+				hint_text: 'Ep. Num'
+				font_size: font
+				background_color: color_2
+				on_text_validate: root.on_enter()
+				on_text: root.on_text()
+
+			BoxLayout:
+				orientation: 'horizontal'
+				spacing: font/4
+				size_hint_y: 0.5
+
+				TogButt:
+					id: btn_rtn
+					text: 'Return'
+					# on_state: root.btn_rtn_press()
+
+				TogButt:
+					id: btn_add
+					text: 'Add'
+					size_hint_x: 0.7
+					# on_state: root.btn_add_press()
+
+			TapButt:
+				id: btn_rand
+				text: 'Roll the\nDice!'
+				on_press: root.btn_rand_press()

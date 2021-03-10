@@ -65,74 +65,74 @@ for line in spisok:
 print ('episodes left ', len(spisok))
 watched_spisok.sort()
 
-while True:
-    print('Введите команду "run" для выбора новой серии')
-    print('Используйте "add" чтобы пометить серию как просмотренную')
-    print('Команда "return" убирает пометку о просмторе с серии')
-    print('Для закрытия программы введите "stop"')
-    input_data = input()
+# while True:
+print('Введите команду "run" для выбора новой серии')
+print('Используйте "add" чтобы пометить серию как просмотренную')
+print('Команда "return" убирает пометку о просмторе с серии')
+print('Для закрытия программы введите "stop"')
+input_data = input()
 
     # run выбирает случайную серию из списка и проверяет
     # не находится ли она в списке просмотренного
-    if input_data == 'run':
-        flag = 0
-        if len(spisok) == 0:
-            Reset_list()
-            with open('random_list.txt') as file:
-                spisok = [row.strip() for row in file]
-            with open('watched_list.txt') as file:
-                watched_spisok = [row.strip() for row in file]
+def run():
+    flag = 0
+    if len(spisok) == 0:
+        Reset_list()
+        with open('random_list.txt') as file:
+            spisok = [row.strip() for row in file]
+        with open('watched_list.txt') as file:
+            watched_spisok = [row.strip() for row in file]
+        flag = 1
+    while flag == 0:
+        episode = random.choice(spisok)
+        ep_index = spisok.index(episode)
+        if episode not in watched_spisok:
+            print(episode)
+            Remove_episode(episode)
+            Add_episode(episode)
             flag = 1
-        while flag == 0:
-            episode = random.choice(spisok)
-            ep_index = spisok.index(episode)
-            if episode not in watched_spisok:
-                print(episode)
-                Remove_episode(episode)
-                Add_episode(episode)
-                flag = 1
-            else:
-                Remove_episode(episode)
+        else:
+            Remove_episode(episode)
 
     # add запрашивает номер серии, вносит ее в список просмотренных
     # и удаляет из основного списка
-    elif input_data == 'add':
-        flag_data = 1
-        while flag_data != 0:
-            print('Для выхода введите "0"')
-            print('Введите номер серии:')
-            episode = input()
-            if episode != '0':
-                if episode not in watched_spisok:
-                    print('%s серия помечена как просмотренная' % episode)
-                    Add_episode(episode)
-                    Remove_episode(episode)
-                else:
-                    print('Эта серия уже в списке просмотренных')
+def add():
+    flag_data = 1
+    while flag_data != 0:
+        print('Для выхода введите "0"')
+        print('Введите номер серии:')
+        episode = input()
+        if episode != '0':
+            if episode not in watched_spisok:
+                print('%s серия помечена как просмотренная' % episode)
+                Add_episode(episode)
+                Remove_episode(episode)
             else:
-                flag_data = 0
+                print('Эта серия уже в списке просмотренных')
+        else:
+            flag_data = 0
 
     # return удаляет серию из списка просмотренных
     # и возвращает ее в список оставшихся серий
-    elif input_data == 'return':
-        flag_data = 1
-        while flag_data != 0:
-            print('Для выхода введите "0"')
-            print('Введите номер серии:')
-            episode = input()
-            if episode != '0':
-                print('%s серия убрана из просмотренных' % episode)
-                Return_episode(episode)
-            else:
-                flag_data = 0
+def remove():
+    flag_data = 1
+    while flag_data != 0:
+        print('Для выхода введите "0"')
+        print('Введите номер серии:')
+        episode = input()
+        if episode != '0':
+            print('%s серия убрана из просмотренных' % episode)
+            Return_episode(episode)
+        else:
+            flag_data = 0
 
     # останавливает выполнение кода
-    elif input_data == 'stop':
-        break
+# def stop():
+#     break
 
     # все прочие команды вызывают сообщение о количестве
     # оставшихся серий
-    else:
+def ep_left():
         with open('random_list.txt') as file:
             spisok = [row.strip() for row in file]
         print('Осталось непросмотренных серий %s' % len(spisok))
